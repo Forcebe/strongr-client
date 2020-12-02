@@ -55,7 +55,7 @@ export default {
     return {
       drawer: false,
       links: [
-        {icon: 'mdi-view-dashboard', text: 'Dashboard', route: '/'},
+        {icon: 'mdi-weight-lifter', text: 'Routines', route: '/'},
         {icon: 'mdi-folder', text: 'My Projects', route: '/projects'},
         {icon: 'mdi-account-group', text: 'Team', route: '/team'},
       ]

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
+import Home from '../views/Home.vue'
+import Routines from '../views/Routines.vue'
 import Projects from '../views/Projects.vue'
 import Team from '../views/Team.vue'
 
@@ -9,8 +10,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Dashboard',
-    component: Dashboard
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/routines',
+    name: 'Routines',
+    component: Routines
   },
   {
     path: '/projects',
