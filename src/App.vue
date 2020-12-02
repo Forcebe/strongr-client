@@ -22,13 +22,11 @@ export default {
     handleLogin(data) {
       this.isLoggedIn = true
       this.user = data.user
-      console.log(this.user)
     },
 
     handleLogout() {
       this.isLoggedIn = false
       this.user = {}
-      console.log(this.user)
     },
 
     loginStatus() {
@@ -42,7 +40,6 @@ export default {
           this.handleLogout()
         }
       })
-      .catch(error => console.log('api errors:', error))
     }
   },
   computed: {
