@@ -19,20 +19,17 @@
               <div class="subtitle-1">{{ routine.name }}</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn text color='grey' class="d-flex justify-space-between">
-                <v-icon small left>mdi-pencil</v-icon>
-                <span>Edit</span>
-              </v-btn>
+              <editRoutine
+                :name="routine.name"
+                :id="routine.id"
+                @done='refresh'
+              />
               <v-spacer></v-spacer>
-              <v-btn
-                @click="deleteRoutine(routine.id)"
-                text
-                color='grey'
-                class="d-flex justify-space-between"
-              >
-                <span>Delete</span>
-                <v-icon small right>mdi-delete</v-icon>
-              </v-btn>
+              <deleteRoutine
+                :name="routine.name"
+                :id="routine.id"
+                @done='deleteRoutine(routine.id)'
+              />
             </v-card-actions>
           </v-card>
         </v-col>
@@ -46,6 +43,8 @@
 
 <script>
 import axios from 'axios'
+import editRoutine from '../components/Edit-routine'
+import deleteRoutine from '../components/Delete-routine'
 
 export default {
   mounted() {
@@ -53,13 +52,23 @@ export default {
 
     .then(response => {
       this.routines = response.data.routines
-      console.log(this.routines[0])
     })
+  },
+
+  updated() {
+    axios.get(this.$apiURL + 'routines', {withCredentials: true})
+
   },
 
   methods: {
     deleteRoutine(id) {
       axios.delete(this.$apiURL + `/routines/${id}`, {withCredentials: true})
+      window.location.reload()
+    },
+    refresh(newRoutines) {
+      this.routines = newRoutines
+      console.log('refreshing ', this.routines)
+      // this.$forceUpdate()
     }
   },
 
@@ -68,6 +77,11 @@ export default {
       routines: [],
       workouts: [],
    }
+ },
+
+ components: {
+   editRoutine,
+   deleteRoutine
  }
 }
 

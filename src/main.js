@@ -5,7 +5,7 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
-Vue.prototype.$apiURL = "https://strongr-api.herokuapp.com/"
+Vue.prototype.$apiURL = "http://localhost:3001/"
 
 // "http://localhost:3001/"
 // "https://strongr-api.herokuapp.com/"

@@ -2,24 +2,28 @@
   <v-dialog max-width="600px" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        depressed
-        class="success"
+        text
+        color="grey"
+        class="d-flex justify-space-between"
         v-bind="attrs"
         v-on="on"
       >
-      Add new routine</v-btn>
+      <v-icon small left>mdi-pencil</v-icon>
+      <span>Edit</span>
+    </v-btn>
     </template>
 
     <v-card>
       <v-card-title>
-        <h2>Add a new routine</h2>
+        <h2>Edit {{ routine_name }}</h2>
       </v-card-title>
 
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field
             label="Name"
-            v-model="name"
+            v-model="routine_name"
+            :value="routine_name"
             prepend-icon="mdi-run"
             :rules="inputRules"
           ></v-text-field>
@@ -31,7 +35,7 @@
           class="success mx-0 mt-3"
           @click="submit"
         >
-          Add Routine
+          Update Routine
         </v-btn>
         </v-form>
       </v-card-text>
@@ -46,35 +50,39 @@ import axios from 'axios'
 export default {
   data() {
    return {
-     name: '',
      errors: [],
-     dialog: false,
      inputRules: [
        v => v.length >= 3 || 'Minimum length is 3 characters'
-     ]
+     ],
+     routine_name: this.name,
+     routine_id: this.id,
+     dialog: false,
    }
  },
+
+ props: [
+   'name',
+   'id'
+ ],
 
  methods: {
    submit() {
      if (this.$refs.form.validate()) {
        let routine = {
-         name: this.name,
+         name: this.routine_name,
        }
 
-       axios.post(this.$apiURL + 'routines', {routine}, {withCredentials: true})
+       axios.put(this.$apiURL + 'routines/' + this.id, {routine}, {withCredentials: true})
 
-       .then(response => {
-         if(response.data.status === 'created') {
-           this.$emit('routineCreated', response.data)
+       .then((response) => {
+         if (response) {
            this.dialog = false
-           console.log('create routine emits done')
-           this.$emit('done')
-           window.location.reload()
+           this.$emit('done', response.data.routines)
          } else {
-          this.errors = response.data.errors
+           console.log('no response')
          }
        })
+
      }
 
    }

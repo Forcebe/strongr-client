@@ -3,6 +3,7 @@
     <NavbarLoggedIn
       v-if="isLoggedIn"
       @logout="handleLogout"
+      @newRoutine="refresh"
     />
     <Navbar
       @userCreated="handleLogin"
@@ -26,6 +27,7 @@ export default {
 
   updated() {
     this.loginStatus()
+    console.log('updating')
   },
 
   mounted() {
@@ -36,6 +38,11 @@ export default {
     handleLogin(data) {
       this.isLoggedIn = true
       this.user = data.user
+    },
+
+    refresh() {
+      console.log('refreshing app.vue')
+      this.$forceUpdate()
     },
 
     handleLogout() {
@@ -55,7 +62,8 @@ export default {
           this.handleLogout()
         }
       })
-    }
+    },
+
   },
   computed: {
     theme() {

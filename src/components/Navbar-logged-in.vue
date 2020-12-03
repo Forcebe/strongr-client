@@ -21,7 +21,7 @@
         <h2 class="white--text mt-1">{{ user.username }}</h2>
       </div>
       <div class="d-flex flex-column align-center mt-4 mb-3">
-        <CreateRoutine />
+        <CreateRoutine @done='done' />
       </div>
 
       <v-list>
@@ -88,6 +88,10 @@ export default {
       .then(response => {
         this.user = response.data.user
       })
+    },
+    done() {
+      console.log('Navbar-logged-in emits newRoutine')
+      this.$emit('newRoutine')
     }
   }
 }

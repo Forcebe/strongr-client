@@ -28,6 +28,11 @@ const routes = [
     path: '/exercises',
     name: 'Exercises',
     component: Exercises
+  },
+  {
+    path: '/refresh',
+    redirect: '/routines',
+    name: 'Refresh'
   }
 ]
 
@@ -40,13 +45,11 @@ const router = new VueRouter({
 router.beforeEach( async (to, from, next)  => {
   if (to.name !== 'Home') {
     if (!await isAuthenticated()) {
-      console.log('go home')
       next({ name: 'Home'});
     } else {
       next();
     }
   } else {
-    console.log('authorised')
     next();
   }
 })
