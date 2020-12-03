@@ -10,18 +10,13 @@
           sm="6"
           md="4"
           lg="3"
-          v-for="person in team"
-          :key="person.name"
+          v-for="routine in routines"
+          :key="routine.name"
         >
           <v-card flat class="text-center ma-3">
-            <v-responsive class="pt-4">
-              <v-avatar size='100' class="grey lighten-2">
-                <img :src="person.avatar" alt="person.name">
-              </v-avatar>
-            </v-responsive>
+
             <v-card-text>
-              <div class="subtitle-1">{{ person.name }}</div>
-              <div class="grey--text">{{ person.role }}</div>
+              <div class="subtitle-1">{{ routine.name }}</div>
             </v-card-text>
             <v-card-actions>
               <v-btn text color='grey' class="d-flex justify-space-between">
@@ -29,7 +24,12 @@
                 <span>Edit</span>
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn text color='grey' class="d-flex justify-space-between">
+              <v-btn
+                @click="deleteRoutine(routine.id)"
+                text
+                color='grey'
+                class="d-flex justify-space-between"
+              >
                 <span>Delete</span>
                 <v-icon small right>mdi-delete</v-icon>
               </v-btn>
@@ -45,17 +45,28 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
+  mounted() {
+    axios.get(this.$apiURL + 'routines', {withCredentials: true})
+
+    .then(response => {
+      this.routines = response.data.routines
+      console.log(this.routines[0])
+    })
+  },
+
+  methods: {
+    deleteRoutine(id) {
+      axios.delete(this.$apiURL + `/routines/${id}`, {withCredentials: true})
+    }
+  },
+
  data()  {
    return {
-     team: [
-        { name: 'The Net Ninja', role: 'Web developer', avatar: '/avatar-1.png' },
-        { name: 'Ryu', role: 'Graphic designer', avatar: '/avatar-2.png' },
-        { name: 'Chun Li', role: 'Web developer', avatar: '/avatar-3.png' },
-        { name: 'Gouken', role: 'Social media maverick', avatar: '/avatar-4.png' },
-        { name: 'Yoshi', role: 'Sales guru', avatar: '/avatar-5.png'}
-      ]
+      routines: [],
+      workouts: [],
    }
  }
 }

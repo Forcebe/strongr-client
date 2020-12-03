@@ -25,12 +25,10 @@ export default {
   name: 'App',
 
   updated() {
-    console.log('page updated')
     this.loginStatus()
   },
-  
+
   mounted() {
-    console.log('page updated')
     this.loginStatus()
   },
 
@@ -47,7 +45,7 @@ export default {
     },
 
     loginStatus() {
-      axios.get('http://localhost:3001/logged_in',
+      axios.get(this.$apiURL + 'logged_in',
       {withCredentials: true})
 
       .then(response => {

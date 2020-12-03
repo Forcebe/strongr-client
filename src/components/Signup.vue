@@ -107,7 +107,7 @@ export default {
           password_confirmation: this.password_confirmation
         }
 
-        axios.post('http://localhost:3001/users', {user}, {withCredentials: true})
+        axios.post(this.$apiURL + 'users', {user}, {withCredentials: true})
           .then(response => {
             if (response.data.status === 'created') {
               this.$emit('userCreated', response.data)

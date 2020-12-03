@@ -21,7 +21,7 @@
         <h2 class="white--text mt-1">{{ user.username }}</h2>
       </div>
       <div class="d-flex flex-column align-center mt-4 mb-3">
-        <Popup />
+        <CreateRoutine />
       </div>
 
       <v-list>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Popup from './Popup'
+import CreateRoutine from './Create-routine'
 import axios from 'axios'
 
 
@@ -56,7 +56,7 @@ export default {
   },
 
   components: {
-    Popup
+    CreateRoutine
   },
 
   data() {
@@ -73,7 +73,7 @@ export default {
 
   methods: {
     logout() {
-      axios.delete('http://localhost:3001/logout', {withCredentials: true})
+      axios.delete(this.$apiURL + 'logout', {withCredentials: true})
        .then(response => {
          if (response.data.logged_out) {
            this.$emit('logout')
@@ -82,11 +82,10 @@ export default {
        })
     },
     getUser() {
-      axios.get('http://localhost:3001/logged_in',
+      axios.get(this.$apiURL + 'logged_in',
       {withCredentials: true})
 
       .then(response => {
-        console.log(response.data.user)
         this.user = response.data.user
       })
     }

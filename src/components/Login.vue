@@ -82,7 +82,7 @@ export default {
           email: this.email,
           password: this.password
         }
-        axios.post('http://localhost:3001/login', {user}, {withCredentials: true})
+        axios.post(this.$apiURL + 'login', {user}, {withCredentials: true})
           .then(response => {
             if (response.data.logged_in) {
               this.$emit('login', response.data)
