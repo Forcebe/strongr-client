@@ -1,6 +1,14 @@
 <template>
   <v-app id="main" :style="{background: $vuetify.theme.themes[theme].background}">
-    <Navbar />
+    <NavbarLoggedIn
+      v-if="isLoggedIn"
+      @logout="handleLogout"
+    />
+    <Navbar
+      @userCreated="handleLogin"
+      @login="handleLogin"
+      v-else
+    />
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -8,13 +16,21 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
 import Navbar from '@/components/Navbar'
+import NavbarLoggedIn from '@/components/Navbar-logged-in'
 import axios from 'axios'
 
 export default {
   name: 'App',
 
+  updated() {
+    console.log('page updated')
+    this.loginStatus()
+  },
+  
   mounted() {
+    console.log('page updated')
     this.loginStatus()
   },
 
@@ -27,6 +43,7 @@ export default {
     handleLogout() {
       this.isLoggedIn = false
       this.user = {}
+      this.$router.push({ name: 'Home'})
     },
 
     loginStatus() {
@@ -49,11 +66,12 @@ export default {
   },
 
   components: {
-    Navbar
+    Navbar,
+    NavbarLoggedIn
   },
 
   data: () => ({
-    isLoggedIn: false,
+    isLoggedIn: null,
     user: {},
     dialog: ''
   }),

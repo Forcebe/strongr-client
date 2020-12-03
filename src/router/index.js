@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Routines from '../views/Routines.vue'
-import Projects from '../views/Projects.vue'
-import Team from '../views/Team.vue'
+import Workouts from '../views/Workouts.vue'
+import Exercises from '../views/Exercises.vue'
+import axios from 'axios'
 
 Vue.use(VueRouter)
 
@@ -19,14 +20,14 @@ const routes = [
     component: Routines
   },
   {
-    path: '/projects',
-    name: 'Projects',
-    component: Projects
+    path: '/workouts',
+    name: 'Workouts',
+    component: Workouts
   },
   {
-    path: '/team',
-    name: 'Team',
-    component: Team
+    path: '/exercises',
+    name: 'Exercises',
+    component: Exercises
   }
 ]
 
@@ -35,5 +36,31 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach( async (to, from, next)  => {
+  if (to.name !== 'Home') {
+    if (!await isAuthenticated()) {
+      console.log('go home')
+      next({ name: 'Home'});
+    } else {
+      next();
+    }
+  } else {
+    console.log('authorised')
+    next();
+  }
+})
+
+ const isAuthenticated = async function () {
+   const response = await axios.get('http://localhost:3001/logged_in',
+   {withCredentials: true})
+
+
+     if (response.data.logged_in) {
+       return true
+     } else {
+       return false
+     }
+ }
 
 export default router

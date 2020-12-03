@@ -21,19 +21,6 @@
       </v-container>
     </v-sheet>
 
-    <!-- CTA button todo: sign up popup -->
-    <v-container>
-      <v-row
-        align="center"
-        justify="center"
-      >
-        <v-btn  large class="primary">
-          <v-icon left>mdi-account-plus</v-icon>
-          Sign Up Now
-        </v-btn>
-      </v-row>
-    </v-container>
-
     <!-- Three cards containing marketing guff -->
     <v-row>
       <!-- Card 1 -->
@@ -82,6 +69,7 @@
 </template>
 
 <script>
+
 export default {
 
   computed: {

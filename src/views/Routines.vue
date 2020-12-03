@@ -1,6 +1,6 @@
 <template>
   <div class="routines">
-    <h1 class="subtitle-1 grey--text">Routines</h1>
+    <h1 class="subtitle-1 grey--text px-6">Routines</h1>
 
     <v-container  class="my-5">
 
